@@ -15,8 +15,8 @@ const Block = styled.div`
       position: absolute;
       height: 35px;
       top: 0;
-      opacity: 0.4;
-      z-index: 3;
+   
+      z-index: 1;
       right: 0;
       background-color: #2d2c45;
       border-radius: 5px 5px 0 0;
@@ -77,8 +77,8 @@ const Block = styled.div`
       position: absolute;
       height: 75px;
       top: 0;
-      opacity: 0.4;
-      z-index: 3;
+  
+      z-index: 1;
       right: 0;
       background-color: #2d2c45;
       border-radius: 5px 5px 0 0;
@@ -89,7 +89,7 @@ const Block = styled.div`
       position: absolute;
       height: 75px;
       bottom: 0;
-      opacity: 0.9;
+    
       right: 0;
       border-radius: 0 0 5px 5px;
       box-shadow: 0px 5px 2px #201e2a;

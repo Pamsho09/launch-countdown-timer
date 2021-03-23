@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect ,useRef} from "react";
 import styled, { createGlobalStyle } from "styled-components";
+import {useHistory} from "react-router-dom"
 import back from "../assets/images/pattern-hills.svg";
 import star from "../assets/images/bg-stars.svg";
 import Num from "../components/Num";
-import facebook from "../assets/images/icon-facebook.svg";
+import facebook from "../assets/images/icon-facebook.svg"; 
 import instagram from "../assets/images/icon-instagram.svg";
 
 const Global = createGlobalStyle`
@@ -36,7 +37,7 @@ const Main = styled.div`
 
   align-items: center;
   .hero {
-    margin: 50%;
+    margin-top: 50%;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -74,7 +75,7 @@ const Main = styled.div`
   }
   .icons {
     z-index: 11;
-    margin-bottom: 15%;
+    margin-bottom: 10%;
     display: flex;
     gap: 3em;
     img {
@@ -130,7 +131,13 @@ const Main = styled.div`
     width: 50%;
 
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    form{
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      flex-direction:column;
+    }
   }
   .star {
     width: 100%;
@@ -148,8 +155,32 @@ const Main = styled.div`
     }
   }
 }
+.container {
+   
+
+    display: flex;
+    justify-content: center;
+    form{
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      gap:2em;
+      z-index:111;
+      flex-direction:column;
+      input{
+        width:100%;
+        height:3em;
+        border-radius:10px;
+       text-align:center;
+       outline:none;
+
+        font-family: "Red Hat Text", sans-serif;
+      }
+    }
+  }
 `;
 function App() {
+  const history =useHistory(null)
   const Time = [
     { opt: "Days", cant: 1 },
     { opt: "Hours", cant: 0 },
@@ -157,60 +188,43 @@ function App() {
     { opt: "Seconds", cant: 12 },
   ];
   const [time, setTime] = useState(Time);
-  useEffect(() => {
-    setTimeout(() => {
-      if (time[3].cant > 0) {
-        setTime([
-          time[0],
-          time[1],
-          time[2],
+  const [day,setDay]=useState(null)
+  const [hours,setHours]=useState(null)
+  const [minutes,setMinutes]=useState(null)
+  const [seconds,setSeconds]=useState(null)
 
-          { opt: "Seconds", cant: time[3].cant - 1 },
-        ]);
-      } else if (time[1].cant == 0) {
-        setTime([
-          { opt: "Days", cant: time[0].cant - 1 },
-          { opt: "Hours", cant: 23 },
-          { opt: " Minutes", cant: 59 },
-          { opt: "Seconds", cant: 59 },
-        ]);
-      } else if (time[2].cant == 0) {
-        setTime([
-          time[0],
-          { opt: "Hours", cant: time[1].cant - 1 },
-          { opt: " Minutes", cant: 59 },
-          { opt: "Seconds", cant: 59 },
-        ]);
-      } else if (time[3].cant == 0) {
-        setTime([
-          time[0],
-          time[1],
-          { opt: "Minutes", cant: time[2].cant - 1 },
+const dayRef=useRef(null)
+const hoursRef=useRef(null)
+const minutesRef =useRef(null)
+const secondsRef=useRef(null)
 
-          { opt: "Seconds", cant: 59 },
-        ]);
-      }
-    }, 1000);
-  });
   console.log(time);
+const handleSubmit=(e)=>{
+  e.preventDefault()
 
+  history.push(`/timer/${day}/${hours}/${minutes}/${seconds}`)
+}
   return (
     <>
       <Main>
         <div className="hero">
-          <h1>We're launching soon</h1>
+          <h1>generate timer link</h1>
           <div className="container">
-            {time.map((e) => (
-              <Num data={e} />
-            ))}
+            <form onSubmit={handleSubmit}>
+              <input type="number" placeholder="Days"   required ref={dayRef}  onChange={()=>setDay(dayRef.current.value)}/>
+              <input type="number"  placeholder="Hours " required ref={hoursRef} onChange={()=>setHours(hoursRef.current.value)}/>
+              <input type="number"  placeholder="Minutes " required ref={minutesRef} onChange={()=>setMinutes(minutesRef.current.value)}/>
+              <input type="number"  placeholder="Seconds " required ref={secondsRef} onChange={()=>setSeconds(secondsRef.current.value)}/>
+              <input type="submit"/>
+            </form>
           </div>{" "}
         </div>
         <div className="icons">
-          <a href="" target="_blanck">
+          <a href="https://www.facebook.com/pamshojs/" target="_blanck">
             <img src={facebook} />
           </a>
 
-          <a href="" target="_blanck">
+          <a href="https://www.facebook.com/pamshojs/" target="_blanck">
             <img src={instagram} />
           </a>
         </div>
