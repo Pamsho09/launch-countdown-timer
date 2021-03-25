@@ -114,75 +114,81 @@ const Main = styled.div`
 function App() {
   const { day, hours, minutes, seconds } = useParams();
 
-  const Time = [
-    { opt: "Days", cant: day ? day : 0 },
-    { opt: "Hours", cant: hours ? hours : 0 },
-    { opt: " Minutes", cant: minutes ? minutes : 0 },
-    { opt: "Seconds", cant: seconds ? seconds : 0 },
-  ];
+  const Time = {
+    Days: day ? day : 0,
+    Hours: hours ? hours : 0,
+    Minutes: minutes ? minutes : 0,
+    Seconds: seconds ? seconds : 0,
+  };
+  const [time, setTime] = useState([Time]);
+  const updateTime = () => {
+    if (time[0].Seconds > 0) {
+      setTime([
+        {
+          ...time[0],
+          Seconds: time[0].Seconds - 1,
+        },
+      ]);
+    }
+    else if (time[0].Hours == 0  && time[0].Days > 0)  {
+      setTime([
+        {
+          Days:time[0].Days-1,
+          Hours:23,
+          Minutes:59,
+          Seconds:59,
+        },
+      ]);
+    } 
+    else if (time[0].Minutes == 0  && time[0].Hours > 0)  {
+      setTime([
+        {
+          ...time[0],
+          Hours:time[0].Hours-1,
+          Minutes:59,
+          Seconds:59,
+        },
+      ]);
+    } else if (time[0].Seconds == 0 && time[0].Minutes >0) {
+      setTime([
+        {
+          ...time[0],
+          Minutes:time[0].Minutes-1,
+          Seconds:59,
+        },
+      ]);
+    }
+  };
+  console.log(time);
 
-  const [time, setTime] = useState(Time);
   useEffect(() => {
     setTimeout(() => {
-      if (
-        time[0].cant == 0 &&
-        time[1].cant == 0 &&
-        time[2].cant == 0 &&
-        time[3].cant == 0
-      ) {
-        setTime([
-          { opt: "Days", cant: 0 },
-          { opt: "Hours", cant: 0 },
-          { opt: " Minutes", cant: 0 },
-          { opt: "Seconds", cant: 0 },
-        ]);
-      } else if (time[3].cant > 0) {
-        setTime([
-          time[0],
-          time[1],
-          time[2],
-
-          { opt: "Seconds", cant: time[3].cant - 1 },
-        ]);
-      } else if (time[3].cant == 0) {
-        setTime([
-          time[0],
-          time[1],
-          { opt: "Minutes", cant: time[2].cant - 1 },
-
-          { opt: "Seconds", cant: 59 },
-        ]);
-      } 
-      else if (time[2].cant == 0) {
-        setTime([
-          time[0],
-          { opt: "Hours", cant: time[1].cant - 1 },
-          { opt: " Minutes", cant: 59 },
-          { opt: "Seconds", cant: 59 },
-        ]);
-      }else if (time[1].cant == 0) {
-        setTime([
-          { opt: "Days", cant: time[0].cant - 1 },
-          { opt: "Hours", cant: 23 },
-          { opt: " Minutes", cant: 59 },
-          { opt: "Seconds", cant: 59 },
-        ]);
-      } 
-    }, 1000);
+      updateTime();
+    }, 1);
   });
 
   return (
     <>
       <Main>
         <div className="hero">
-          <h1>{(
-        time[0].cant == 0 &&
-        time[1].cant == 0 &&
-        time[2].cant<=15)?"Estamos por terminar":"@pamsho_js"}</h1>
+          <h1>@pamsho_js</h1>
           <div className="container">
-            {time.map((e) => (
-              <Num data={e} />
-            ))}
+            {time.map((e) => {
+              console.log(e);
+              let compo = [];
+              for (let data in e) {
+                console.log(data);
+                compo.push(
+                  <Num
+                    data={{
+                      opt: data,
+                      cant: e[data],
+                    }}
+                  />
+                );
+              }
+              return compo;
+            })}
           </div>{" "}
         </div>
       </Main>
