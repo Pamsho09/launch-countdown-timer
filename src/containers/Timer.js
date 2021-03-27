@@ -112,7 +112,7 @@ const Main = styled.div`
   }
 `;
 function App() {
-  const { day, hours, minutes, seconds } = useParams();
+  const { day, hours, minutes, seconds,user } = useParams();
 
   const Time = {
     Days: day ? day : 0,
@@ -171,7 +171,7 @@ function App() {
     <>
       <Main>
         <div className="hero">
-          <h1>{(time[0].Days == 0 &&time[0].Hours == 0 && time[0].Minutes <= 15)?"El stream esta por terminar ":"@pamsho_js"}</h1>
+          <h1>{(time[0].Days == 0 &&time[0].Hours == 0 && time[0].Minutes <= 15)?"El stream esta por terminar ":`@${user}`}</h1>
           <div className="container">
             {time.map((e) => {
               console.log(e);

@@ -192,7 +192,8 @@ function App() {
   const [hours,setHours]=useState(null)
   const [minutes,setMinutes]=useState(null)
   const [seconds,setSeconds]=useState(null)
-
+  const [user,setUser]=useState(null)
+const userRef = useRef(null)
 const dayRef=useRef(null)
 const hoursRef=useRef(null)
 const minutesRef =useRef(null)
@@ -202,7 +203,7 @@ const secondsRef=useRef(null)
 const handleSubmit=(e)=>{
   e.preventDefault()
 
-  history.push(`/timer/${day}/${hours}/${minutes}/${seconds}`)
+  history.push(`/timer/${day}/${hours}/${minutes}/${seconds}/${user}`)
 }
   return (
     <>
@@ -211,6 +212,7 @@ const handleSubmit=(e)=>{
           <h1>generate timer link</h1>
           <div className="container">
             <form onSubmit={handleSubmit}>
+            <input type="text" placeholder="user"   required ref={userRef}  onChange={()=>setUser(userRef.current.value)}/>
               <input type="number" placeholder="Days"   required ref={dayRef}  onChange={()=>setDay(dayRef.current.value)}/>
               <input type="number"  placeholder="Hours " required ref={hoursRef} onChange={()=>setHours(hoursRef.current.value)}/>
               <input type="number"  placeholder="Minutes " required ref={minutesRef} onChange={()=>setMinutes(minutesRef.current.value)}/>

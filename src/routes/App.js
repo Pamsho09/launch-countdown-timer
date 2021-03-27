@@ -8,7 +8,7 @@ function App() {
       <Router>
         <Switch>
           <Route exact path="/" component={Home} />
-          <Route exact path="/timer/:day?/:hours?/:minutes?/:seconds?" component={Timer} />
+          <Route exact path="/timer/:day?/:hours?/:minutes?/:seconds?/:user?" component={Timer} />
         </Switch>
       </Router>
     </>
